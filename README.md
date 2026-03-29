@@ -16,7 +16,7 @@ The goal is to answer questions like:
 
 The pipeline ingests raw match data, loads it into a Google Cloud Storage Data Lake, transfers it to BigQuery, transforms it through a multi-layer dbt pipeline, and surfaces insights through an interactive Looker Studio dashboard.
 
-> **Dashboard:** [[Insert Public Looker Studio Link Here](https://lookerstudio.google.com/s/hVu31zLivdo)]
+> **Dashboard:** [(https://lookerstudio.google.com/s/hVu31zLivdo)]
 
 ---
 
