@@ -1,0 +1,80 @@
+version: 2
+
+models:
+  - name: mart_champion_win_rates
+    description: "Champion win rates — Ranked Solo, min 10 games."
+    columns:
+      - name: champion_name
+        tests: [not_null]
+      - name: patch
+        tests: [not_null]
+      - name: position
+        tests: [not_null]
+      - name: games_played
+        tests: [not_null]
+      - name: win_rate_pct
+        tests:
+          - not_null
+          - is_between:
+              arguments:
+                min_value: 0
+                max_value: 100
+      - name: win_rate_rank
+        tests: [not_null]
+      - name: popularity_rank
+        tests: [not_null]
+
+  - name: mart_meta_shifts
+    description: "Patch-over-patch changes in champion win rate and pick volume."
+    columns:
+      - name: champion_name
+        tests: [not_null]
+      - name: patch
+        tests: [not_null]
+      - name: meta_shift_label
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Buffed / Rising', 'Nerfed / Falling', 'Stable']
+                quote: true
+
+  - name: mart_player_profiles
+    description: "Aggregated player performance. One row per unique player."
+    columns:
+      - name: puuid
+        tests:
+          - not_null
+          - unique
+      - name: total_games
+        tests: [not_null]
+      - name: overall_win_rate_pct
+        tests:
+          - not_null
+          - is_between:
+              arguments:
+                min_value: 0
+                max_value: 100
+      - name: most_played_position
+        tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: most_played_champion
+        tests: [not_null]
+
+  - name: mart_item_win_rates
+    description: "Item win rates per champion, position, and patch."
+    columns:
+      - name: item_id
+        tests: [not_null]
+      - name: champion_name
+        tests: [not_null]
+      - name: games_with_item
+        tests: [not_null]
+      - name: win_rate_with_item
+        tests:
+          - not_null
+          - is_between:
+              arguments:
+                min_value: 0
+                max_value: 100

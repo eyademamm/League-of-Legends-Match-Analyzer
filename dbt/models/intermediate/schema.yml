@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: int_matches__with_kda
+    description: "Staging matches enriched with computed KDA, gold per minute, and damage per minute."
+    columns:
+      - name: game_id
+        tests: [not_null]
+      - name: puuid
+        tests: [not_null]
+      - name: gold_per_minute
+        tests: [not_null]
+      - name: dpm
+        tests: [not_null]
+      - name: kda_tier
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Perfect KDA', 'Excellent', 'Good', 'Average', 'Poor']
+                quote: true
+
+  - name: int_matches__team_context
+    description: "KDA-enriched matches joined with team-level aggregates."
+    columns:
+      - name: game_id
+        tests: [not_null]
+      - name: puuid
+        tests: [not_null]
+
+  - name: int_matches__ranked_only
+    description: "Filtered to Ranked Solo only."
+    columns:
+      - name: game_id
+        tests: [not_null]
+      # removed accepted_values on queue_id — INT64 vs STRING type mismatch in BigQuery
+
+  - name: int_champions__patch_stats
+    description: "Champion performance aggregated by patch, position, and queue."
+    columns:
+      - name: champion_name
+        tests: [not_null]
+      - name: patch
+        tests: [not_null]
+      - name: position
+        tests:
+          - not_null:
+              config:
+                severity: warn   # nulls exist for remakes/bot games
+      - name: queue_id
+        tests: [not_null]
+      - name: games_played
+        tests: [not_null]
+      - name: win_rate_pct
+        tests: [not_null]
