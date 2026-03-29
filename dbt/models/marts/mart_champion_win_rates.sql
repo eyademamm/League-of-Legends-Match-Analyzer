@@ -1,3 +1,9 @@
+{{ config(
+    materialized='table',
+    cluster_by=["champion_name", "position", "patch"]
+) }}
+
+
 select
     champion_name,
     patch,

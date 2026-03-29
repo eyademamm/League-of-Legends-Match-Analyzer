@@ -1,3 +1,8 @@
+{{ config(
+    materialized='table',
+    cluster_by=["solo_tier", "most_played_position", "most_played_champion"]
+) }}
+
 select
     puuid,
     MAX(summoner_name)                                          as summoner_name,

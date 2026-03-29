@@ -1,3 +1,8 @@
+{{ config(
+    materialized='table',
+    cluster_by=["champion_name", "position", "patch"]
+) }}
+
 with base as (
     select * from {{ ref('mart_champion_win_rates') }}
 ),

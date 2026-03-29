@@ -1,3 +1,8 @@
+{{ config(
+    materialized='table',
+    cluster_by=["champion_name", "position", "patch"]
+) }}
+
 with items_unpivoted as (
     select
         game_id,
@@ -28,4 +33,4 @@ select
 from filtered
 group by item_id, champion_name, position, patch
 having COUNT(*) >= 10
-order by win_rate_with_item desc
+-- removed ORDER BY — incompatible with BigQuery clustering
