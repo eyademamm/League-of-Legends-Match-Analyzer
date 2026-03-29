@@ -1,0 +1,7 @@
+sources:
+  - name: league_data_raw
+    database: zoomcamp-project-491223 #GCP project
+    schema: league_data_raw # Or name of your BigQuery dataset
+    
+    tables:
+      - name: matches
