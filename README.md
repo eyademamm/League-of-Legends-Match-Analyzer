@@ -239,6 +239,8 @@ Open Kestra UI at `http://localhost:8080`, import the flow YAML, and click **Exe
 
 > If using GitHub Codespaces, port 8080 is automatically forwarded and set to public visibility via `.devcontainer/devcontainer.json`.
 
+> **Note:** If it didn't work, change the port visibility to public.
+
 ### 3. Run dbt Transformations
 
 ```bash
