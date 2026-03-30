@@ -1,0 +1,44 @@
+id: league_data_pipeline
+namespace: zoomcamp
+
+variables:
+  gcs_file: "gs://zoomcamp-project-491223-league-bucket/raw/league_data.csv"
+  table: "zoomcamp-project-491223.league_data_raw.matches"
+
+tasks:
+  - id: download_dataset
+    type: io.kestra.plugin.core.http.Download
+    uri: "https://raw.githubusercontent.com/eyademamm/League-of-Legends-Match-Analyzer/refs/heads/main/league_data.csv" 
+
+  - id: upload_to_gcs
+    type: io.kestra.plugin.gcp.gcs.Upload
+    from: "{{ outputs.download_dataset.uri }}"
+    to: "{{ render(vars.gcs_file) }}"
+
+  - id: bq_create_external_table
+    type: io.kestra.plugin.gcp.bigquery.Query
+    sql: |
+      CREATE OR REPLACE EXTERNAL TABLE `{{ render(vars.table) }}_ext`
+      OPTIONS (
+          format = 'CSV',
+          uris = ['{{ render(vars.gcs_file) }}'],
+          skip_leading_rows = 1,
+          ignore_unknown_values = TRUE
+      );
+
+  - id: bq_create_final_table
+    type: io.kestra.plugin.gcp.bigquery.Query
+    sql: |
+      CREATE OR REPLACE TABLE `{{ render(vars.table) }}`
+      AS
+      SELECT * FROM `{{ render(vars.table) }}_ext`;
+
+  - id: purge_files
+    type: io.kestra.plugin.core.storage.PurgeCurrentExecutionFiles
+    description: Cleans up the temporary downloaded CSV from Kestra's memory
+    disabled: false
+
+pluginDefaults:
+  - type: io.kestra.plugin.gcp
+    values:
+      serviceAccount: "{{ secret('GCP_CREDS') }}"
