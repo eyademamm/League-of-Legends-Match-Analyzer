@@ -164,6 +164,9 @@ Tests on `position` and `most_played_position` are set to `severity: warn` becau
 
 ## Dashboard (Looker Studio)
 
+<img width="1200" height="730" alt="Screenshot 2026-03-30 062738" src="https://github.com/user-attachments/assets/fa746cf9-438e-4c90-af33-325f0f7e3deb" />
+
+
 The dashboard is built in **Looker Studio** connected directly to BigQuery's `mart_champion_win_rates` table. It features an interactive `champion_name` dropdown that dynamically filters both visual tiles simultaneously:
 
 **Tile 1 — Win Rate by Position (Bar Chart)**
