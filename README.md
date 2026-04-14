@@ -247,7 +247,7 @@ Open Kestra UI at `http://localhost:8080`, import the flow YAML, and click **Exe
 > **Note:** If it didn't work, change the port visibility to public.
 
 ### 3. Run dbt Transformations
-
+> add your GCP project ID (project_id) and the name of your dataset (dataset_id) to the ***vars:*** part located in the dbt_project.yml file 
 ```bash
 # Install dependencies
 dbt deps
