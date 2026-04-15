@@ -270,9 +270,3 @@ dbt run --select intermediate
 dbt run --select marts
 ```
 
-### 5. View dbt documentation
-
-```bash
-dbt docs generate
-dbt docs serve
-```
