@@ -34,7 +34,7 @@ services:
       - kestra_tmp:/tmp/kestra-wd
     environment:
 
-      SECRET_KEY: "" #add you bashed secret key
+      SECRET_KEY: "<SECRET_KEY>" # Replace with the bashed key you generated
       KESTRA_CONFIGURATION: |
         datasources:
           postgres:
