@@ -17,4 +17,5 @@ select
     round(avg(vision_score), 1)                     as avg_vision_score
 
 from {{ ref('int_matches__team_context') }}  -- or team_context version
+where position is not null
 group by champion_name, patch, position, queue_id

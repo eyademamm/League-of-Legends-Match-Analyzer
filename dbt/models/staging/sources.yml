@@ -1,7 +1,7 @@
 sources:
-  - name: league_data_raw
-    database: zoomcamp-project-491223 #GCP project
-    schema: league_data_raw # Or name of your BigQuery dataset
+  - name: "{{ var('dataset_id') }}"
+    database: "{{ var('project_id') }}" #GCP project ID
+    schema: "{{ var('dataset_id') }}" # Or name of your BigQuery dataset
     
     tables:
       - name: matches

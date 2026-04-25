@@ -40,3 +40,8 @@ models:
     # Applies to all files under models/example/
     example:
       +materialized: table
+
+
+vars:
+  project_id: 'evaluation-492207' # GCP project ID
+  dataset_id: 'league_data_raw' # GCP dataset ID
